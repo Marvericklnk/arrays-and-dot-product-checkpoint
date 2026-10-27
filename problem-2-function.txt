@@ -1,0 +1,40 @@
+// The function returns its result instead of modifying an OUT parameter.
+FUNCTION dot_product(IN v1, v2 : ARRAY OF REAL,
+                     IN dimension : INTEGER) : REAL
+VAR
+    i : INTEGER
+    total : REAL
+BEGIN
+    total <- 0
+    FOR i FROM 1 TO dimension DO
+        total <- total + v1[i] * v2[i]
+    END_FOR
+    RETURN total
+END_FUNCTION
+
+ALGORITHM Orthogonality_With_Function
+VAR
+    n, pairIndex, dimension, i : INTEGER
+    v1, v2 : ARRAY OF REAL
+    ps : REAL
+BEGIN
+    READ(n)
+
+    FOR pairIndex FROM 1 TO n DO
+        READ(dimension)
+        DECLARE v1[1..dimension], v2[1..dimension]
+
+        FOR i FROM 1 TO dimension DO
+            READ(v1[i])
+            READ(v2[i])
+        END_FOR
+
+        ps <- dot_product(v1, v2, dimension)
+
+        IF ps = 0 THEN
+            WRITE("Pair ", pairIndex, ": orthogonal")
+        ELSE
+            WRITE("Pair ", pairIndex, ": not orthogonal")
+        END_IF
+    END_FOR
+END

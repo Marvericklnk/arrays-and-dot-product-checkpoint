@@ -1,0 +1,41 @@
+// IN parameters are passed by value; OUT ps is passed by reference.
+PROCEDURE dot_product(IN v1, v2 : ARRAY OF REAL,
+                      IN dimension : INTEGER,
+                      OUT ps : REAL)
+VAR
+    i : INTEGER
+BEGIN
+    ps <- 0
+    FOR i FROM 1 TO dimension DO
+        ps <- ps + v1[i] * v2[i]
+    END_FOR
+END_PROCEDURE
+
+ALGORITHM Orthogonality_With_Procedure
+VAR
+    n, pairIndex, dimension, i : INTEGER
+    v1, v2 : ARRAY OF REAL
+    ps : REAL
+BEGIN
+    READ(n)
+
+    // Outer loop processes n pairs of vectors.
+    FOR pairIndex FROM 1 TO n DO
+        READ(dimension)
+        DECLARE v1[1..dimension], v2[1..dimension]
+
+        // Inner loop reads both vectors, one coordinate at a time.
+        FOR i FROM 1 TO dimension DO
+            READ(v1[i])
+            READ(v2[i])
+        END_FOR
+
+        CALL dot_product(v1, v2, dimension, ps)
+
+        IF ps = 0 THEN
+            WRITE("Pair ", pairIndex, ": orthogonal")
+        ELSE
+            WRITE("Pair ", pairIndex, ": not orthogonal")
+        END_IF
+    END_FOR
+END

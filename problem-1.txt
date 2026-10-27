@@ -1,0 +1,48 @@
+ALGORITHM Sum_Of_Distinct_Elements
+VAR
+    set1, set2 : ARRAY OF INTEGER
+    size1, size2, i, j, sum : INTEGER
+    found : BOOLEAN
+BEGIN
+    READ(size1)
+    DECLARE set1[1..size1]
+    FOR i FROM 1 TO size1 DO
+        READ(set1[i])
+    END_FOR
+
+    READ(size2)
+    DECLARE set2[1..size2]
+    FOR i FROM 1 TO size2 DO
+        READ(set2[i])
+    END_FOR
+
+    sum <- 0
+
+    // Add elements from set1 that do not appear in set2.
+    FOR i FROM 1 TO size1 DO
+        found <- FALSE
+        FOR j FROM 1 TO size2 DO
+            IF set1[i] = set2[j] THEN
+                found <- TRUE
+            END_IF
+        END_FOR
+        IF found = FALSE THEN
+            sum <- sum + set1[i]
+        END_IF
+    END_FOR
+
+    // Reverse the comparison to include elements unique to set2.
+    FOR i FROM 1 TO size2 DO
+        found <- FALSE
+        FOR j FROM 1 TO size1 DO
+            IF set2[i] = set1[j] THEN
+                found <- TRUE
+            END_IF
+        END_FOR
+        IF found = FALSE THEN
+            sum <- sum + set2[i]
+        END_IF
+    END_FOR
+
+    WRITE("Sum of elements present in only one set: ", sum)
+END
